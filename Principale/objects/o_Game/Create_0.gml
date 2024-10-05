@@ -26,7 +26,7 @@ global.CurrentQuizID    = 0;
 global.CurrentQuizDatas = noone;
 global.PlayerOnStage    = noone;
 
-gameStartCount = 10;//game_get_speed(gamespeed_fps) * 3;
+gameStartCount = game_get_speed(gamespeed_fps) * 3;
 gameStartCd    = gameStartCount;
 
 // Communique avec serveur

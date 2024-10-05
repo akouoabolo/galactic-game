@@ -10,8 +10,9 @@ var _reponse = buffer_read(_buffer, buffer_text);
 
 // Opération
 var _receivedDatas = json_parse(_reponse);
+//show_debug_message(_receivedDatas);
+//show_debug_message(typeof(_receivedDatas));
 show_debug_message(_receivedDatas);
-show_debug_message(typeof(_receivedDatas));
 
 switch (_receivedDatas.message) {
 
@@ -51,15 +52,38 @@ switch (_receivedDatas.message) {
 	case "next_question" :
 	#region
 		global.PlayerOnStage = _receivedDatas.turn;
+		global.QuizDatas = _receivedDatas.quiz;
+		
+		//show_message(global.QuizDatas);
+		global.CurrentQuizDatas = global.QuizDatas[0];
 	#endregion
 		break;
 		
 	case "player_shake" :
 	#region
-	if (global.ObjectOnStage != noone) {
-		
+	if (global.ObjectOnStage != noone && instance_exists(global.ObjectOnStage)) {
 		global.ObjectOnStage.addedForce = _receivedDatas.shakeValue;
 	}
+	#endregion
+		break;
+		
+	case "game_reset" :
+	#region
+		game_restart();
+	#endregion
+		break;
+		
+	case "player_loose_life" :
+	#region
+	
+		if (global.ObjectOnStage.life > 0)
+			global.ObjectOnStage.life--;
+		else {
+			sendServerRaw({
+				message : "player_loose_game",
+				player  : global.PlayerOnStage
+			});
+		}
 	#endregion
 		break;
 }

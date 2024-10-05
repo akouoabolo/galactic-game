@@ -1,0 +1,272 @@
+[
+    {
+        "question": "quel est l' objet le plus gros de l' univers",
+        "proposition": [
+            "le soleil",
+            "la terre",
+            "la lune",
+            "un trou noir"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quel est le premier homme à avoir marché sur la lune",
+        "proposition": [
+            "neil armstrong",
+            "buzz aldrin",
+            "michael collins",
+            "johen glenn"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quel est l'avion le plus rapide du monde",
+        "proposition": [
+            "concorde",
+            "boeing 747",
+            "airbus a380",
+            "lockheed sr-71"
+        ],
+        "réponse": 3
+    },
+    {
+        "question": "quel est l'avion le plus grand du monde",
+        "proposition": [
+            "airbus a380",
+            "boeing 747",
+            "antonov an-225",
+            "c-5 galaxy"
+        ],
+        "réponse": 2
+    },
+    {
+        "question": "quel est la première femme à avoir voyagé dans l'espace",
+        "proposition": [
+            "valentina tereshkova",
+            "sally ride",
+            "mae jemison",
+            "yuri gagarine"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quel est l'astronaute le plus âgé",
+        "proposition": [
+            "johen glenn",
+            "scott kelly",
+            "neil armstrong",
+            "yuri gagarine"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quel est la planète la plus éloignée du soleil",
+        "proposition": [
+            "neptune",
+            "uranus",
+            "saturne",
+            "pluton"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quel est la planète la plus chaude du système solaire",
+        "proposition": [
+            "mercure",
+            "vénus",
+            "mars",
+            "jupiter"
+        ],
+        "réponse": 1
+    },
+    {
+        "question": "quelle est la planète la plus proche du soleil",
+        "proposition": [
+            "mercure",
+            "vénus",
+            "terre",
+            "mars"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quelle est la planète la plus éloignée du soleil",
+        "proposition": [
+            "neptune",
+            "uranus",
+            "saturne",
+            "pluton"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "combien de kilomètre séparent la terre du soleil",
+        "proposition": [
+            "10 millions",
+            "50 millions",
+            "150 millions",
+            "300 millions"
+        ],
+        "réponse": 2
+    },
+    {
+        "question": "quelle planète a la plus forte gravité du système solaire",
+        "proposition": [
+            "jupiter",
+            "saturne",
+            "uranus",
+            "neptune"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quelle est la planète a la plus faible gravité du système solaire",
+        "proposition": [
+            "mercure",
+            "mars",
+            "pluton",
+            "éris"
+        ],
+        "réponse": 2
+    },
+    {
+        "question": "quelle est la gravité de la terre",
+        "proposition": [
+            "5m/s2",
+            "10m/s2",
+            "9,8m/s2",
+            "20m/s2"
+        ],
+        "réponse": 2
+    },
+    {
+        "question": "quelle est la planète la plus rapide en termes de rotation",
+        "proposition": [
+            "jupiter",
+            "saturne",
+            "uranus",
+            "neptune"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quelle est la planète la plus lente en termes de rotation",
+        "proposition": [
+            "vénus",
+            "mars",
+            "terre",
+            "uranus"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "combien de voyages lunaires ont été effectués",
+        "proposition": [
+            "5",
+            "6",
+            "7",
+            "8"
+        ],
+        "réponse": 1
+    },
+    {
+        "question": "quel est le record de duréee dans l'espace pour un astronaute",
+        "proposition": [
+            "1 an",
+            "2 ans",
+            "3 ans",
+            "4 ans"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "combien de femmes ont volé dans l'espace",
+        "proposition": [
+            "10",
+            "20",
+            "30",
+            " plus de 60"
+        ],
+        "réponse": 3
+    },
+    {
+        "question": "quelle est la fusée la plus puissante jamais construite",
+        "proposition": [
+            "saturn v",
+            "space shuttle",
+            "falcon heavy",
+            "ariane 5"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quelle fusée a transporté le premier homme sur la lune",
+        "proposition": [
+            "appollo 11",
+            "gemini 12",
+            "mercury 7",
+            "saturn v"
+        ],
+        "réponse": 0
+    },
+    {
+        "question": "quelle est la fusée la plus réutilisable",
+        "proposition": [
+            "space shuttle",
+            "falcon 9",
+            "ariane 5",
+            "vega"
+        ],
+        "réponse": 1
+    },
+    {
+        "question": "combien de personne ont volé dans l'espace",
+        "proposition": [
+            "100",
+            "500",
+            "100",
+            "plus de 600"
+        ],
+        "réponse": 3
+    },
+    {
+        "question": "quel est le record de personnes à bord d'un vaisseau spatial",
+        "proposition": [
+            "5",
+            "7",
+            "10",
+            "14"
+        ],
+        "réponse": 1
+    },
+    {
+        "question": "quelle est la sperficie de la station spatiale internationale",
+        "proposition": [
+            "1000 m2",
+            "5000 m2",
+            "10000 m2",
+            "15000 m2"
+        ],
+        "réponse": 2
+    },
+    {
+        "question": "quelle est la longeur de la fusée saturn v",
+        "proposition": [
+            "50 m",
+            "100 m",
+            "110 m",
+            "120 m"
+        ],
+        "réponse": 2
+    },
+    {
+        "question": "qui est la premiére femme à avoir volé dans l'espace",
+        "proposition": [
+            "valentina tereshkova",
+            "sally ride",
+            "mae jemison",
+            "yuri gagarine"
+        ],
+        "réponse": 0
+    }
+]

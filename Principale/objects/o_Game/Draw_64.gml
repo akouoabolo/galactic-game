@@ -20,12 +20,14 @@ if (room == r_waiting_room) {
 	var _waitingPlayers = global.WaitingList;
 	var _posx = _x;
 	var _posy = _y + TUILE * 4;
+	var _boxH = sprite_get_height(propositionField);
 	var _index = 0; repeat(array_length(_waitingPlayers)) {
 		var _currentPlayer = _waitingPlayers[_index];
 		
 		var _xx = _posx;
-		var _yy = _posy + (TUILE*1.5) * _index;
-		draw_text(_xx, _yy, _currentPlayer);
+		var _yy = _posy + (_boxH + TUILE) * _index;
+		draw_sprite(propositionField, 0, _xx, _yy)
+		draw_text(_xx, _yy, _currentPlayer.name);
 		
 		_index++;
 	}

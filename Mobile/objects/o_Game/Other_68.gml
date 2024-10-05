@@ -20,7 +20,7 @@ switch (_receivedDatas.message) {
 	case "in_waiting_room" :
 	#region
 		global.PlayerDatas = _receivedDatas.data;
-		//show_debug_message(global.PlayerDatas);
+		//show_message(global.PlayerDatas);
 		global.GameState = WAITING_PLAYERS;
 		room = r_waiting;
 	#endregion
@@ -41,6 +41,16 @@ switch (_receivedDatas.message) {
 	#region
 		global.PlayerOnStage = _receivedDatas.data.turn;
 		room = isMyTurn() ? r_game : r_game_bouge;
+		
+		global.CurrentQuiz   = _receivedDatas.data.quiz;
+		
+		// Maj les réponses
+	#endregion
+		break;
+		
+	case "game_reset" :
+	#region
+		game_restart();
 	#endregion
 		break;
 	

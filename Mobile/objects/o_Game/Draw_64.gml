@@ -28,7 +28,7 @@ if (_isInInitRoom) {
 if (_isInWaitingRoom) {
 	
 	var _x = room_width  / 2;
-	var _y = room_height / 2;
+	var _y = room_height / 2 + 32 * 3;
 	var _c = c_white;
 	var _fnt = fnt_waitingMsg;
 	var _txt = "En attente d'un joueur";
@@ -39,6 +39,9 @@ if (_isInWaitingRoom) {
 	draw_set_font(_fnt);
 	
 	draw_text_color(_x, _y, _txt, _c, _c, _c, _c, 1);
+	
+	
+	draw_text_color(_x, 608, global.PlayerDatas.name, _c, _c, _c, _c, 1);
 	
 	draw_set_font(noone);
 	draw_set_halign(fa_left);

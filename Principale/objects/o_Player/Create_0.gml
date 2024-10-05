@@ -7,7 +7,7 @@
 */
 
 state = JOUEUR_MVTS;
-
+life  = 3;
 addedForce = 0;
 addedParcours = 0;
 // Remplissage du roadLine

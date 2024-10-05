@@ -7,6 +7,7 @@ global.InAppID = irandom_range(100000001, 199999999);
 // mes données
 global.PlayerDatas   = noone;
 global.PlayerOnStage = noone;
+global.InAppHeart    = 3;
 
 // Statu du jeu
 global.CurrentQuiz = noone;

@@ -3,6 +3,24 @@
 
 draw_self();
 
+// Life
+var _lx = x - (sprite_width + TUILE * 3)
+var _ly = y;
+var _lt = s_Heart;
+var _ls = .6;
+
+draw_sprite_ext(_lt, 0, _lx, _ly, _ls, _ls, 0, -1, 1);
+
+draw_set_halign(fa_center);
+draw_set_valign(fa_middle);
+draw_set_font(fnt_question);
+
+draw_text_color(_lx, _ly, life, -1, -1, -1, -1, 1);
+
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+draw_set_font(noone);
+
 // Draw roadLine
 var _lineT = roadLine;
 var _linex = x + sprite_width;
@@ -25,11 +43,10 @@ switch (state) {
 		
 		var _parcoursEnd = _x2 - _x1 >= sprite_get_width(_lineT);
 		
-		addedParcours += addedForce;
-			
 		if (_parcoursEnd) {
 			// Victorieux vers le serveur data.id
-			
+		} else {
+			addedParcours += addedForce;	
 		}
 		break;
 	
