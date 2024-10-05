@@ -1,4 +1,11 @@
 let dgram = require('dgram');
+let quizDataGlobal = null;
+
+const res = fetch('tempquestions.json', { method: 'GET' });
+const QUIZ_DATA = res.json();
+let currentQuizIndex = 0;
+
+
 const { parse } = require('path');
 
 // Données joueurs
@@ -101,7 +108,7 @@ MainServer.on('message', (msg, res) => {
             MainServer.send(responseData, res.port, res.address);
             break;
 
-        case 'getquizdata':
+        /*case 'getquizdata':
             responseData = JSON.stringify({
                 status: "ok",
                 message: "quiz_list",
@@ -117,7 +124,14 @@ MainServer.on('message', (msg, res) => {
                         "reponse": 0
                     },
                 ]
-            });
+            });*/
+
+            case 'getquizdata':
+              responseData = JSON.stringify({
+                status: "ok",
+                message: "quiz_list",
+                quiz: quizDataGlobal
+              });
 
             MainServer.send(responseData, res.port, res.address);
             break;
