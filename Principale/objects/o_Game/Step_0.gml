@@ -43,7 +43,7 @@ switch(_gameState) {
 		if (_isEnoughPlayers) {
 			global.PlayersList = getGamePlayers();
 			
-			gameStartCd--; if (gameStartCd <= 0) {
+			gameStartCd--; if (gameStartCd <= game_get_speed(gamespeed_fps) * 4) {
 				gameStartCd = gameStartCount;
 				initGameQuiz();
 			}
@@ -119,7 +119,8 @@ switch(_gameState) {
 			);
 			
 		}
-		
+	
+			
 		// deb
 		if (keyboard_check_pressed(vk_space)) {
 			if (global.PlayerOnStage == global.PlayersList[0]) {
@@ -131,3 +132,14 @@ switch(_gameState) {
 	#endregion
 		break;
 }
+
+//
+if (room == r_winner) {
+	if (instance_exists(o_Player))
+		instance_destroy(o_Player);
+}
+
+// Screen shake
+shake = shake * .9;
+screenShakeParam[$ "g_Magnitude"] = shake;
+fx_set_parameters(screenShakeLayer, screenShakeParam);

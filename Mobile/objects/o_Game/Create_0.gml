@@ -1,7 +1,7 @@
 /// @description Insert description here
 /// @author : Angniel Ike
-/// @description Insert description here
-/// @author : Angniel Ike
+alarm[0] = game_get_speed(gamespeed_fps) * 2;
+
 global.InAppID = irandom_range(100000001, 199999999);
 
 // mes données

@@ -44,9 +44,19 @@ switch (state) {
 		var _parcoursEnd = _x2 - _x1 >= sprite_get_width(_lineT);
 		
 		if (_parcoursEnd) {
+			
+			// Ecran gagnant
+			room = r_winner;
+			global.Winner = data;
+			
 			// Victorieux vers le serveur data.id
+			o_Game.sendServerRaw(json_stringify({
+				message : "player_win_game",
+				player  : data
+			}));
+			
 		} else {
-			addedParcours += addedForce;	
+			addedParcours += addedForce;
 		}
 		break;
 	

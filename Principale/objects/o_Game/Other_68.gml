@@ -51,11 +51,15 @@ switch (_receivedDatas.message) {
 		
 	case "next_question" :
 	#region
+	
 		global.PlayerOnStage = _receivedDatas.turn;
 		global.QuizDatas = _receivedDatas.quiz;
 		
 		//show_message(global.QuizDatas);
 		global.CurrentQuizDatas = global.QuizDatas[0];
+		
+		if (!instance_exists(o_NextTourAlert))
+			instance_create_depth(0, 0, 0, o_NextTourAlert);
 	#endregion
 		break;
 		
@@ -76,13 +80,38 @@ switch (_receivedDatas.message) {
 	case "player_loose_life" :
 	#region
 	
-		if (global.ObjectOnStage.life > 0)
+		if (instance_exists(global.ObjectOnStage) && global.ObjectOnStage.life > 0) {
 			global.ObjectOnStage.life--;
-		else {
-			sendServerRaw({
+						
+			// On fait dendiné l'écran ici
+			CameraShake(20);
+			audio_play_sound(snd_sfx_hit,  .9, false);
+			audio_play_sound(snd_sfx_buzz,  1, false);
+			
+			if (global.ObjectOnStage.life <= 0) {
+				
+				// On informe les autres
+			sendServerRaw(json_stringify({
 				message : "player_loose_game",
 				player  : global.PlayerOnStage
-			});
+			}));
+			
+			// On affiche le winner
+			room = r_winner;
+			global.Winner = global.PlayerOnStage;
+			
+			}
+			
+		} else {
+			// On informe les autres
+			sendServerRaw(json_stringify({
+				message : "player_loose_game",
+				player  : global.PlayerOnStage
+			}));
+			
+			// On affiche le winner
+			room = r_winner;
+			global.Winner = global.PlayerOnStage;
 		}
 	#endregion
 		break;

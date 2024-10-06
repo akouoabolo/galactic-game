@@ -1,6 +1,21 @@
 /// @description Insert description here
 /// @author : Angniel Ike
 //room = (room == r_init_app) ? r_waiting_room : r_waiting_room;
+alarm[0] = game_get_speed(gamespeed_fps) * 2;
+
+audio_play_sound(snd_theme_main, .5, true, .4);
+
+// From Screen Shake
+shake  = false;
+shakeForce = 2;
+shakeAdd   = 0;
+shakeDuration  = game_get_speed(gamespeed_fps);
+
+// Layer du screenShake
+shake = 0;
+
+screenShakeLayer = layer_get_fx("efx_screen_shake");
+screenShakeParam = fx_get_parameters(screenShakeLayer);
 
 // Pour le network
 globalvar NETWORK_URL, NETWORK_PORT, NETWORK_CLIENT, SERVER_BUFFER;
@@ -26,7 +41,7 @@ global.CurrentQuizID    = 0;
 global.CurrentQuizDatas = noone;
 global.PlayerOnStage    = noone;
 
-gameStartCount = game_get_speed(gamespeed_fps) * 3;
+gameStartCount = game_get_speed(gamespeed_fps) * 5;
 gameStartCd    = gameStartCount;
 
 // Communique avec serveur
@@ -111,4 +126,11 @@ getGamePlayers = function () {
 	var _tempList = [ _waitingList[0], _waitingList[1] ];
 	
 	return _tempList;
+}
+	
+getWinner = function (playerDatas) {
+	if (playerDatas.id == global.PlayersList[0].id)
+		return global.PlayersList[1];
+	else
+		return global.PlayersList[0];
 }

@@ -54,4 +54,24 @@ switch (_receivedDatas.message) {
 	#endregion
 		break;
 	
+	case "player_loose_game" :
+		//show_message_async(_receivedDatas);
+		
+		if (_receivedDatas.data.player.id == global.PlayerDatas.id) {
+			room = r_looser;			
+		} else {
+			room = r_winner;	
+		}
+		break;
+		
+		
+	case "player_win_game" :
+		//show_message_async(_receivedDatas);
+		
+		if (_receivedDatas.data.player.id == global.PlayerDatas.id) {
+			room = r_winner;			
+		} else {
+			room = r_looser;	
+		}
+		break;
 }

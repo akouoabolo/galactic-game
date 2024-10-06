@@ -28,8 +28,10 @@ switch (global.GameState) {
 	global.DeviceShakeForce = _force;
 		
 	//
-	var _shake = (_force > 2.5 && _force < 4.5) ? 2 : 0;
-	_shake = (_force > 4.5) ? 3 : 0;
+	var _requireForceLow  = 1.5//2.5;
+	var _requireForceHigh = 1.6//4.5;
+	var _shake = (_force > _requireForceLow && _force < _requireForceHigh) ? 2 : 0;
+	_shake = (_force > _requireForceHigh) ? 3 : 0;
 	
 	// Send to server
 	sendServerRaw(json_stringify({
