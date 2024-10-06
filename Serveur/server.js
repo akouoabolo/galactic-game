@@ -437,6 +437,18 @@ MainServer.on('message', (msg, res) => {
            
              break;
 
+             case 'player_loose_game':
+                sendLooseGameMessage(parsedMessage.player);
+                console.log('Joueur qui a perdu la partie');
+                break;
+
+             case 'player_win_game':
+                    // Gérer la victoire du joueur ici
+                    console.log('Joueur a gagné la partie');
+                    // Envoyer un message au joueur gagnant
+                    sendWinGameMessage(parsedMessage.player);
+                    break;
+
            
     }
 
@@ -502,6 +514,7 @@ ClieServer.on('message', (msg, res) => {
             sendLooseLifeMessage();
             console.log(parsedMessage.verdict)
         }
+    
             // console.log(parsedMessage.verdict);
             // console.log(parsedMessage.player);
 
@@ -544,6 +557,18 @@ ClieServer.on('message', (msg, res) => {
                 console.log('Joueur a perdu une vie');
                 break;
 
+            case 'player_loose_game':
+                sendLooseGameMessage(parsedMessage.player);
+                console.log('Joueur qui a perdu la partie');
+                break;
+
+            case 'player_win_game':
+              // Gérer la victoire du joueur ici
+              console.log('Joueur a gagné la partie');
+              // Envoyer un message au joueur gagnant
+              sendWinGameMessage(parsedMessage.player);
+              break;
+
     }
 
 }); ClieServer.bind(CliePort, () => { console.log('Clies server a démarré') });
@@ -570,4 +595,31 @@ function sendLooseLifeMessage() {
   MainServer.send(JSON.stringify({
     message: 'player_loose_life'
   }), SERVER_DATA.port, SERVER_DATA.ip);
+}
+
+function sendLooseGameMessage(player) {
+  MainServer.send(JSON.stringify({
+    message: 'player_loose_game',
+    player: player
+  }), SERVER_DATA.port, SERVER_DATA.ip);
+  sendMessageToPlayers("player_loose_game", {
+    message: 'player_loose_game',
+    player: player
+  });
+
+  console.log('Joueur qui a perdu la partie');
+}
+
+function sendWinGameMessage(_player) {
+    MainServer.send(JSON.stringify({
+        message: 'player_win_game',
+        player: _player
+      }), SERVER_DATA.port, SERVER_DATA.ip);
+  
+  sendMessageToPlayers("player_win_game", {
+    message: 'player_win_game',
+    player: _player
+  });
+
+  console.log('Joueur qui a gagné la partie');
 }
