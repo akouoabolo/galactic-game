@@ -319,7 +319,7 @@ let SERVER_DATA  = {};
 
 // Infos
 const MainPort = process.env.MAIN_PORT || 10020;
-const CliePort = process.env.CLIE_PORT || 10021;
+const CliePort = process.env.SUB_PORT || 10021;
 
 const MainServer = dgram.createSocket("udp4");
 const ClieServer = dgram.createSocket("udp4");
@@ -454,7 +454,7 @@ MainServer.on('message', (msg, res) => {
            
     }
 
-}); MainServer.bind(MainPort,"0.0.0.0",  () => console.log("Main serveur a démarré"));
+}); MainServer.bind(MainPort, () => console.log("Main serveur a démarré"));
 
 // Controlleur des client
 ClieServer.on('message', (msg, res) => {
@@ -571,9 +571,15 @@ ClieServer.on('message', (msg, res) => {
               sendWinGameMessage(parsedMessage.player);
               break;
 
+              case 'reinit_game':
+                // Code pour gérer la réinitialisation
+                console.log("Reinitialisation de la partie");
+                    initNewGame();
+                break;
+
     }
 
-}); ClieServer.bind(CliePort,"0.0.0.0", () => { console.log('Clies server a démarré') });
+}); ClieServer.bind(CliePort, () => { console.log('Clies server a démarré') });
 
 
 
