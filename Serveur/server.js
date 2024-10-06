@@ -1,5 +1,7 @@
 let dgram = require('dgram');
+require('dotenv').config();
 let quizDataGlobal = null;
+
 
 const QUIZ_DATA = JSON.parse(`
 [
@@ -316,8 +318,8 @@ let PLAYERS_LIST = [];
 let SERVER_DATA  = {};
 
 // Infos
-const MainPort = 4456;
-const CliePort = 3345;
+const MainPort = process.env.MAIN_PORT || 10020;
+const CliePort = process.env.CLIE_PORT || 10021;
 
 const MainServer = dgram.createSocket("udp4");
 const ClieServer = dgram.createSocket("udp4");
