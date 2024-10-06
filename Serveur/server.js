@@ -452,7 +452,7 @@ MainServer.on('message', (msg, res) => {
            
     }
 
-}); MainServer.bind(MainPort, () => console.log("Main serveur a démarré"));
+}); MainServer.bind(MainPort,"0.0.0.0",  () => console.log("Main serveur a démarré"));
 
 // Controlleur des client
 ClieServer.on('message', (msg, res) => {
@@ -571,7 +571,7 @@ ClieServer.on('message', (msg, res) => {
 
     }
 
-}); ClieServer.bind(CliePort, () => { console.log('Clies server a démarré') });
+}); ClieServer.bind(CliePort,"0.0.0.0", () => { console.log('Clies server a démarré') });
 
 
 
