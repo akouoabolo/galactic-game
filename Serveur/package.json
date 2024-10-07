@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "dgram": "^1.0.1"
+    "dgram": "^1.0.1",
+    "dotenv": "^16.4.5"
   }
 }

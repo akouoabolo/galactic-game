@@ -1,309 +1,302 @@
 let dgram = require('dgram');
+require('dotenv').config();
 let quizDataGlobal = null;
+
 
 const QUIZ_DATA = JSON.parse(`
 [
-{
-"question":"quel est l' objet le plus gros de l' univers",
-"propositions":[
-"le soleil",
-"la terre",
-"la lune",
-"un trou noir"
+{    
+"question": "Why do astronauts have to cut their hair in space?",
+"propositions": [
+ "Because they all want a celebrity look",
+ "Because they can't go to the hairdresser",
+ "no answer is correct",
+"To prevent hair from floating everywhere"
 ],
-"reponse":0
+ "reponse":3
 },
 {
-"question":"quel est le premier homme à avoir marché sur la lune",
-"propositions":[
-"neil armstrong",
-"buzz aldrin",
-"michael collins",
-"johen glenn"
-],
-"reponse":0
-},
-{
-"question":"quel est l'avion le plus rapide du monde",
-"propositions":[
-"concorde",
-"boeing 747",
-"airbus a380",
-"lockheed sr-71"
-],
-"reponse":3
-},
-{
-"question":"quel est l'avion le plus grand du monde",
-"propositions":[
-"airbus a380",
-"boeing 747",
-"antonov an-225",
-"c-5 galaxy"
-],
-"reponse":2
-},
-{
-"question":"quel est la première femme à avoir voyagé dans l'espace",
-"propositions":[
-"valentina tereshkova",
-"sally ride",
-"mae jemison",
-"yuri gagarine"
-],
-"reponse":0
-},
-{
-"question":"quel est l'astronaute le plus âgé",
-"propositions":[
-"johen glenn",
-"scott kelly",
-"neil armstrong",
-"yuri gagarine"
-],
-"reponse":0
-},
-{
-"question":"quel est la planète la plus éloignée du soleil",
-"propositions":[
-"neptune",
-"uranus",
-"saturne",
-"pluton"
-],
-"reponse":0
-},
-{
-"question":"quel est la planète la plus chaude du système solaire",
-"propositions":[
-"mercure",
-"vénus",
-"mars",
-"jupiter"
+"question": "How often do astronauts see sunrise in space?",
+"propositions": [
+ "Every day",
+ "Every 90 minutes",
+"no answer is correct",
+ "Once a week"
 ],
 "reponse":1
 },
 {
-"question":"quelle est la planète la plus proche du soleil",
-"propositions":[
-"mercure",
-"vénus",
-"terre",
-"mars"
+ "question": "What is one of the 'misfortunes' astronauts face in space?",
+"propositions": [
+"Boredom",
+"no answer is correct",
+"Lack of Wi-Fi",
+"Claustrophobia"
 ],
-"reponse":0
+ "reponse":3
 },
 {
-"question":"quelle est la planète la plus éloignée du soleil",
-"propositions":[
-"neptune",
-"uranus",
-"saturne",
-"pluton"
-],
-"reponse":0
-},
-{
-"question":"combien de kilomètre séparent la terre du soleil",
-"propositions":[
-"10 millions",
-"50 millions",
-"150 millions",
-"300 millions"
-],
-"reponse":2
-},
-{
-"question":"quelle planète a la plus forte gravité du système solaire",
-"propositions":[
-"jupiter",
-"saturne",
-"uranus",
-"neptune"
-],
-"reponse":0
-},
-{
-"question":"quelle est la planète a la plus faible gravité du système solaire",
-"propositions":[
-"mercure",
-"mars",
-"pluton",
-"éris"
-],
-"reponse":2
-},
-{
-"question":"quelle est la gravité de la terre",
-"propositions":[
-"5m/s2",
-"10m/s2",
-"9,8m/s2",
-"20m/s2"
-],
-"reponse":2
-},
-{
-"question":"quelle est la planète la plus rapide en termes de rotation",
-"propositions":[
-"jupiter",
-"saturne",
-"uranus",
-"neptune"
-],
-"reponse":0
-},
-{
-"question":"quelle est la planète la plus lente en termes de rotation",
-"propositions":[
-"vénus",
-"mars",
-"terre",
-"uranus"
-],
-"reponse":0
-},
-{
-"question":"combien de voyages lunaires ont été effectués",
-"propositions":[
-"5",
-"6",
-"7",
-"8"
+ "question": "What do astronauts feel because of zero gravity?",
+ "propositions": [
+ "They feel light as a feather",
+ "They feel like they have a bad cold",
+ "They become professional acrobats",
+"no answer is correct"
 ],
 "reponse":1
 },
 {
-"question":"quel est le record de duréee dans l'espace pour un astronaute",
-"propositions":[
-"1 an",
-"2 ans",
-"3 ans",
-"4 ans"
+"question": "What do astronauts need to do to avoid losing muscle in space?",
+"propositions": [
+"Exercise for two hours a day",
+"Dance the Macarena",
+"no answer is correct",
+"Eat a lot of chocolate"
 ],
 "reponse":0
 },
 {
-"question":"combien de femmes ont volé dans l'espace",
-"propositions":[
-"10",
-"20",
-"30",
-" plus de 60"
-],
-"reponse":3
-},
-{
-"question":"quelle est la fusée la plus puissante jamais construite",
-"propositions":[
-"saturn v",
-"space shuttle",
-"falcon heavy",
-"ariane 5"
-],
-"reponse":0
-},
-{
-"question":"quelle fusée a transporté le premier homme sur la lune",
-"propositions":[
-"appollo 11",
- "gemini 12",   
-"mercury 7",
-"saturn v"
-],
-"reponse":0
-},
-{
-"question":"quelle est la fusée la plus réutilisable",
-"propositions":[
-"space shuttle",
-"falcon 9",
-"ariane 5",
-"vega"
-],
-"reponse":1
-},
-{
-"question":"combien de personne ont volé dans l'espace",
-"propositions":[
-"100",
-"500",
-"100",
-"plus de 600"
-],
-"reponse":3
-},
-{
-"question":"quel est le record de personnes à bord d'un vaisseau spatial",
-"propositions":[
-"5",
-"7",
-"10",
-"14"
-],
-"reponse":1
-},
-{
-"question":"quelle est la sperficie de la station spatiale internationale",
-"propositions":[
-"1000 m2",
-"5000 m2",
-"10000 m2",
-"15000 m2"
+ "question": "Why do astronauts not have to worry about germs like on Earth?",
+ "propositions": [
+ "Because they have anti-germ spray",
+ "Because they are on vacation",
+ "Because the only germs are the ones they bring with them",
+"no answer is correct"
 ],
 "reponse":2
 },
 {
-"question":"quelle est la longeur de la fusée saturn v",
-"propositions":[
-"50 m",
-"100 m",
-"110 m",
-"120 m"
+"question": "What should the crew do if there is a medical emergency in space?",
+"propositions": [
+"Have an emergency plan ready",
+"Hope everything will be fine",
+"no answer is correct",
+"Call a superhero"
+],
+"reponse":0
+},
+{
+"question": "What does N. Jan Davis do in her free time in space?",
+"propositions": [
+"Plays poker",
+"Brushes her hair",
+"Writes a book about stars",
+"no answer is correct"
+],
+"reponse":1
+},
+{
+"question": "How many hours of sleep do astronauts get after a long workday?",
+"propositions": [
+"10 hours, like professional sleepers",
+ "4 hours, to have more time to work",
+"no answer is correct",
+"8 hours, like on Earth"
+],
+"reponse":3
+},
+{
+"question": "Why do astronauts use a sleep mask and earplugs?",
+"propositions": [
+ "To avoid being disturbed by other astronauts",
+ "To have more colorful dreams",
+ "To not miss the view of Earth",
+"no answer is correct"
+],
+"reponse":0
+},
+{
+"question": "How do astronauts take a shower in space?",
+"propositions": [
+ "With a bucket of water",
+ "With wipes and no-rinse shampoo",
+ "By jumping into a floating bathtub",
+"no answer is correct"
+],
+"reponse":1
+},
+{
+"question": "What happens if astronauts don’t get enough oxygen?",
+"propositions": [
+ "They start singing",
+ "They quietly fall asleep",
+ "They can get fatigued and faint",
+"no answer is correct"
+],
+"reponse": 2
+},
+{
+"question": "How do astronauts brush their teeth in space?",
+"propositions": [
+ "By spitting like at the dentist",
+ "By rinsing their mouths with water",
+ "By swallowing the toothpaste",
+"no answer is correct"
+],
+"reponse":0
+},
+{
+"question": "What device creates oxygen on the space station?",
+"propositions": [
+ "A bubble generator",
+ "The ECLSS system",
+"A giant fan",
+"no answer is correct"
+],
+"reponse":1
+},
+{
+"question": "How does the ECLSS create oxygen aboard the space station?",
+"propositions": [
+ "By blowing on bubbles",
+ "By singing songs about water",
+"no answer is correct",
+"By using electricity to split water"
+],
+"reponse":3
+},
+{
+"question": "What does the Russian water processor do on the space station?",
+"propositions": [
+ "Makes coffee",
+ "Turns air humidity into drinking water",
+ "Creates sparkling water",
+"no answer is correct"
+],
+"reponse":1
+},
+{
+"question": "What is the most surprising aspect of using toilets in space?",
+"propositions": [
+"No need for toilet paper",
+ "Toilets float",
+"no answer is correct",
+"No flushing, just fans"
+],
+"reponse":3
+},
+{
+"question": "How do astronauts position themselves on the toilets in space?",
+"propositions": [
+"With safety belts",
+ "Using leg straps and thigh bars",
+ "By doing an acrobatic jump",
+"no answer is correct"
+],
+"reponse":1
+},
+{
+ "question": "Why are food containers disposable in space?",
+"propositions": [
+"To avoid washing dishes",
+ "Because astronauts don't like doing the dishes",
+ "To save space",
+"no answer is correct"
+],
+"reponse":0
+},
+{
+"question": "How do astronauts heat their food in space?",
+"propositions": [
+ "By placing it in the sun",
+ "Using the station's microwave",
+ "With a module that heats and rehydrates food",
+"no answer is correct"
 ],
 "reponse":2
 },
 {
-"question":"qui est la premiére femme à avoir volé dans l'espace",
-"propositions":[
-"valentina tereshkova",
-"sally ride",
-"mae jemison",
-"yuri gagarine"
+"question": "How do astronauts clean their kitchen utensils?",
+"propositions": [
+ "They put them in a dishwasher",
+ "They use disinfecting wipes",
+ "They rinse them in floating water",
+"no answer is correct"
 ],
-"reponse":0
+"reponse": 1
 },
 {
-"question":"quelle  femme a passé le plus de temps dans l'espace ",
-"propositions":[
-"peggy whitson",
-"sally ride",
-"mae jemison",
-"valentina tereshkova"
-],
-"reponse":0
-},
-{
-"question":"quelle femme a réalisé le première pas dans l'espace   ",
-"propositions":[
-"valentina tereshkova",
-"sally ride",
-"mae jemison",
-"peggy whitson"
-],
-"reponse":0
-},
-{
-"question":"quelle femme a effectué la première sortie extravéhiculaire",
-"propositions":[
-"sally ride",
-"mae jemison",
-"peggy whitson",
-"svetlana savitskaya"
+"question": "What does astronaut Edward T. Lu eat in the Zvezda module?",
+"propositions": [
+ "Floating candies",
+"Instant noodles in space",
+"no answer is correct",
+"A normal meal in microgravity"
 ],
 "reponse":3
+},
+{
+"question": "Where do astronauts store their personal items?",
+"propositions": [
+ "In a large safe",
+ "In lockers",
+ "In floating backpacks",
+"no answer is correct"
+],
+ "reponse": 1
+},
+{
+"question": "Why do astronauts have to strap themselves when sleeping?",
+"propositions": [
+ "To avoid having nightmares",
+ "To feel like mummies",
+"no answer is correct",
+"To prevent floating and bumping into things"
+],
+"reponse":3
+},
+{
+"question": "How do astronauts sleep on the space station?",
+"propositions": [
+ "On water beds",
+ "In sleeping bags attached to the wall or a seat",
+ "By napping on floating cushions",
+"no answer is correct"
+],
+"reponse":1
+},
+{
+"question": "Where else can crew members sleep on the shuttle?",
+"propositions": [
+ "In the cockpit pretending to pilot",
+ "In the commander's or pilot's seat",
+ "On the floor, like lazy astronauts",
+"no answer is correct"
+],
+"reponse":1
+},
+{
+"question": "What could astronauts do to improve their sleep in space?",
+"propositions": [
+"Listen to relaxing music",
+ "Find a magical mattress",
+"Count stars until they fall asleep",
+"no answer is correct"
+],
+"reponse":2
+},
+{
+"question": "What does astronaut C. Michael Foale do in the Zvezda module?",
+"propositions": [
+ "Plays hide and seek",
+ "Maintains a spacesuit",
+ "Tries to build a robot",
+"no answer is correct"
+],
+"reponse":1
+},
+{
+"question": "What do astronauts do if they need to repair something on the station?",
+"propositions": [
+
+ "Call customer service",
+ "Use a space DIY manual",
+ "Diagnose and repair it themselves",
+"no answer is correct"
+],
+"reponse": 2
 }
-]  
+]
 `);
 let currentQuizIndex = 0;
 
@@ -316,8 +309,8 @@ let PLAYERS_LIST = [];
 let SERVER_DATA  = {};
 
 // Infos
-const MainPort = 4456;
-const CliePort = 3345;
+const MainPort = process.env.MAIN_PORT || 10020;
+const CliePort = process.env.SUB_PORT || 10021;
 
 const MainServer = dgram.createSocket("udp4");
 const ClieServer = dgram.createSocket("udp4");
@@ -437,6 +430,18 @@ MainServer.on('message', (msg, res) => {
            
              break;
 
+             case 'player_loose_game':
+                sendLooseGameMessage(parsedMessage.player);
+                console.log('Joueur qui a perdu la partie');
+                break;
+
+             case 'player_win_game':
+                    // Gérer la victoire du joueur ici
+                    console.log('Joueur a gagné la partie');
+                    // Envoyer un message au joueur gagnant
+                    sendWinGameMessage(parsedMessage.player);
+                    break;
+
            
     }
 
@@ -463,7 +468,7 @@ ClieServer.on('message', (msg, res) => {
 
             let newPlayer = {
                 id: newPlayerID,
-                name: "joueur " + newPlayerID,
+                name: "player" + newPlayerID,
                 addr: res.address,
                 port: res.port,
                 device: parsedMessage.device
@@ -502,6 +507,7 @@ ClieServer.on('message', (msg, res) => {
             sendLooseLifeMessage();
             console.log(parsedMessage.verdict)
         }
+    
             // console.log(parsedMessage.verdict);
             // console.log(parsedMessage.player);
 
@@ -544,6 +550,24 @@ ClieServer.on('message', (msg, res) => {
                 console.log('Joueur a perdu une vie');
                 break;
 
+            case 'player_loose_game':
+                sendLooseGameMessage(parsedMessage.player);
+                console.log('Joueur qui a perdu la partie');
+                break;
+
+            case 'player_win_game':
+              // Gérer la victoire du joueur ici
+              console.log('Joueur a gagné la partie');
+              // Envoyer un message au joueur gagnant
+              sendWinGameMessage(parsedMessage.player);
+              break;
+
+              case 'reinit_game':
+                // Code pour gérer la réinitialisation
+                console.log("Reinitialisation de la partie");
+                    initNewGame();
+                break;
+
     }
 
 }); ClieServer.bind(CliePort, () => { console.log('Clies server a démarré') });
@@ -570,4 +594,31 @@ function sendLooseLifeMessage() {
   MainServer.send(JSON.stringify({
     message: 'player_loose_life'
   }), SERVER_DATA.port, SERVER_DATA.ip);
+}
+
+function sendLooseGameMessage(player) {
+  MainServer.send(JSON.stringify({
+    message: 'player_loose_game',
+    player: player
+  }), SERVER_DATA.port, SERVER_DATA.ip);
+  sendMessageToPlayers("player_loose_game", {
+    message: 'player_loose_game',
+    player: player
+  });
+
+  console.log('Joueur qui a perdu la partie');
+}
+
+function sendWinGameMessage(_player) {
+    MainServer.send(JSON.stringify({
+        message: 'player_win_game',
+        player: _player
+      }), SERVER_DATA.port, SERVER_DATA.ip);
+  
+  sendMessageToPlayers("player_win_game", {
+    message: 'player_win_game',
+    player: _player
+  });
+
+  console.log('Joueur qui a gagné la partie');
 }
