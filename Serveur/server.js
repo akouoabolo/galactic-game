@@ -468,7 +468,7 @@ ClieServer.on('message', (msg, res) => {
 
             let newPlayer = {
                 id: newPlayerID,
-                name: "joueur " + newPlayerID,
+                name: "player" + newPlayerID,
                 addr: res.address,
                 port: res.port,
                 device: parsedMessage.device
