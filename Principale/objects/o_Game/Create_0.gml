@@ -20,7 +20,7 @@ screenShakeParam = fx_get_parameters(screenShakeLayer);
 // Pour le network
 globalvar NETWORK_URL, NETWORK_PORT, NETWORK_CLIENT, SERVER_BUFFER;
 
-NETWORK_URL    = "192.168.1.145";
+NETWORK_URL    = "192.168.43.63";
 NETWORK_PORT   = "4456";
 NETWORK_CLIENT = network_create_socket(network_socket_udp);
 

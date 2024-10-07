@@ -8,7 +8,7 @@ if (room == r_waiting_room) {
 	var _y = room_height / 2 - TUILE * 4;
 	var _c = c_white;
 	var _font  = fnt_question;
-	var _texte = "En attente de nouveaux joueurs";
+	var _texte = "Waiting for players";
 	
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
@@ -40,7 +40,7 @@ if (room == r_waiting_room) {
 	// Quand on attend le qcm
 	if (global.GameState == WAITING_FOR_QUIZ_DATAS) {
 		o_LoadingSpinnerQuiz.state = 1;
-		draw_text_color(_x, room_height - TUILE * 4.5, "Chargement du quiz",
+		draw_text_color(_x, room_height - TUILE * 4.5, "Loading",
 		-1, -1, -1, -1, o_LoadingSpinnerQuiz.alpha);
 	}
 	

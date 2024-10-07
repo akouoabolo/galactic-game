@@ -10,7 +10,7 @@ if (_isInInitRoom) {
 	var _y = room_height / 2;
 	var _c = c_white;
 	var _fnt = fnt_waitingMsg;
-	var _txt = "En attente de connexion";
+	var _txt = "Pending";
 
 	// Message attente
 	draw_set_halign(fa_center);
@@ -31,7 +31,7 @@ if (_isInWaitingRoom) {
 	var _y = room_height / 2 + 32 * 3;
 	var _c = c_white;
 	var _fnt = fnt_waitingMsg;
-	var _txt = "En attente d'un joueur";
+	var _txt = "Waiting for players";
 
 	// Message attente
 	draw_set_halign(fa_center);
