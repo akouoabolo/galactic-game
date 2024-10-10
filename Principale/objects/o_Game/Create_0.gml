@@ -20,7 +20,7 @@ screenShakeParam = fx_get_parameters(screenShakeLayer);
 // Pour le network
 globalvar NETWORK_URL, NETWORK_PORT, NETWORK_CLIENT, SERVER_BUFFER;
 
-NETWORK_URL    = "192.168.43.63";
+NETWORK_URL    = "13.38.172.41";
 NETWORK_PORT   = "4456";
 NETWORK_CLIENT = network_create_socket(network_socket_udp);
 
@@ -47,12 +47,13 @@ gameStartCd    = gameStartCount;
 // Communique avec serveur
 sendServerRaw = function (_data = "") {
 	
-		show_debug_message(_data);
+		//show_debug_message(_data);
 	
 		buffer_seek(SERVER_BUFFER, buffer_seek_start, 0);
 		buffer_write(SERVER_BUFFER, buffer_text, _data);
 
 		network_send_udp_raw(NETWORK_CLIENT, NETWORK_URL, NETWORK_PORT, SERVER_BUFFER, buffer_tell(SERVER_BUFFER));
+		//network_send_raw(NETWORK_CLIENT, SERVER_BUFFER, buffer_tell(SERVER_BUFFER));
 	
 }
 

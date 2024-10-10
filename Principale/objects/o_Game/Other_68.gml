@@ -8,11 +8,14 @@ var _buffer  = async_load[? "buffer"];
 buffer_seek(_buffer, buffer_seek_start, 0);
 var _reponse = buffer_read(_buffer, buffer_text);
 
+show_debug_message(_reponse);
+
+
 // Opération
 var _receivedDatas = json_parse(_reponse);
 //show_debug_message(_receivedDatas);
 //show_debug_message(typeof(_receivedDatas));
-show_debug_message(_receivedDatas);
+//show_debug_message(_receivedDatas);
 
 switch (_receivedDatas.message) {
 

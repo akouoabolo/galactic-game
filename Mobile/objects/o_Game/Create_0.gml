@@ -18,7 +18,7 @@ global.DeviceShakeForce = 0;
 // Pour le network
 globalvar NETWORK_URL, NETWORK_PORT, NETWORK_CLIENT, SERVER_BUFFER;
 
-NETWORK_URL    = "192.168.1.145";//"127.0.0.1";
+NETWORK_URL    = "13.38.172.41";
 NETWORK_PORT   = "3345";
 NETWORK_CLIENT = network_create_socket(network_socket_udp);
 

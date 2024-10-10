@@ -1,6 +1,7 @@
-let dgram = require('dgram');
+const dgram = require('dgram');
+const Websocket = require("ws");
+
 require('dotenv').config();
-let quizDataGlobal = null;
 
 
 const QUIZ_DATA = JSON.parse(`
@@ -306,12 +307,97 @@ const { parse } = require('path');
 // Données joueurs
 let WAITING_LIST = [];
 let PLAYERS_LIST = [];
-let SERVER_DATA  = {};
+let SERVER_DATA = {};
 
 // Infos
-const MainPort = process.env.MAIN_PORT || 10020;
-const CliePort = process.env.SUB_PORT || 10021;
+const MainPort = process.env.MAIN_PORT;
+const CliePort = process.env.SUB_PORT;
 
+/** Websocket Server | Web */
+const MainServerWs = new Websocket.Server({
+    host: "127.0.0.1",
+    port: MainPort
+});
+
+let WebApp = null;
+
+MainServerWs.on("connection", (ws) => {
+    console.log("Nouvelle connection détectée");
+    WebApp = ws;
+    // Les msg du client
+    ws.on("message", (message) => {
+        console.log("Message client : " + message);
+
+        let parsedMessage = JSON.parse(message);
+
+        // Comportement fonction du msg
+        let responseData = "";
+
+        switch (parsedMessage.message) {
+
+            case 'request_connection':
+                responseData = JSON.stringify({
+                    status: "ok",
+                    message: "to_waiting_room"
+                });
+
+                ws.send(responseData);
+                break;
+
+            case 'getwaitinglist':
+                responseData = JSON.stringify({
+                    status: "ok",
+                    message: "waiting_list",
+                    waitingList: WAITING_LIST
+                });
+
+                ws.send(responseData);
+                break;
+
+            case 'getquizdata':
+                responseData = JSON.stringify({
+                    status: "ok",
+                    message: "quiz_list",
+                    quiz: [QUIZ_DATA[currentQuizIndex]]
+                });
+
+                ws.send(responseData);
+                break;
+
+            case 'start_game':
+
+                PLAYERS_LIST = parsedMessage.playersList;
+                sendMessageToPlayers("game_started", { turn: parsedMessage.playerTurn, quiz: parsedMessage.currentQuiz });
+
+                ws.send(JSON.stringify({
+                    message: "players_ready"
+                }));
+                break;
+
+            case 'reinit_game':
+                // Code pour gérer la réinitialisation
+                console.log("Reinitialisation de la partie");
+                initNewGame();
+                break;
+
+            case 'player_loose_game':
+                sendLooseGameMessage(parsedMessage.player);
+                console.log('Joueur qui a perdu la partie');
+                break;
+
+            case 'player_win_game':
+                // Gérer la victoire du joueur ici
+                console.log('Joueur a gagné la partie');
+                // Envoyer un message au joueur gagnant
+                sendWinGameMessage(parsedMessage.player);
+                break;
+
+
+        }
+    });
+}); console.log(`Serveur a démarré sur ${MainServerWs.host}:${MainServerWs.port}`);
+
+/** UDP SERVER | mobile + pc */
 const MainServer = dgram.createSocket("udp4");
 const ClieServer = dgram.createSocket("udp4");
 
@@ -388,7 +474,7 @@ MainServer.on('message', (msg, res) => {
                 message: "to_waiting_room"
             });
 
-            SERVER_DATA = { ip : res.address, port : res.port };
+            SERVER_DATA = { ip: res.address, port: res.port };
 
             MainServer.send(responseData, res.port, res.address);
             break;
@@ -409,7 +495,7 @@ MainServer.on('message', (msg, res) => {
                 message: "quiz_list",
                 quiz: [QUIZ_DATA[currentQuizIndex]]
             });
-            
+
             MainServer.send(responseData, res.port, res.address);
             break;
 
@@ -423,29 +509,29 @@ MainServer.on('message', (msg, res) => {
             }), res.port, res.address);
             break;
 
-            case 'reinit_game':
-        // Code pour gérer la réinitialisation
-        console.log("Reinitialisation de la partie");
+        case 'reinit_game':
+            // Code pour gérer la réinitialisation
+            console.log("Reinitialisation de la partie");
             initNewGame();
-           
-             break;
 
-             case 'player_loose_game':
-                sendLooseGameMessage(parsedMessage.player);
-                console.log('Joueur qui a perdu la partie');
-                break;
+            break;
 
-             case 'player_win_game':
-                    // Gérer la victoire du joueur ici
-                    console.log('Joueur a gagné la partie');
-                    // Envoyer un message au joueur gagnant
-                    sendWinGameMessage(parsedMessage.player);
-                    break;
+        case 'player_loose_game':
+            sendLooseGameMessage(parsedMessage.player);
+            console.log('Joueur qui a perdu la partie');
+            break;
 
-           
+        case 'player_win_game':
+            // Gérer la victoire du joueur ici
+            console.log('Joueur a gagné la partie');
+            // Envoyer un message au joueur gagnant
+            sendWinGameMessage(parsedMessage.player);
+            break;
+
+
     }
 
-}); MainServer.bind(MainPort, () => console.log("Main serveur a démarré"));
+}); //MainServer.bind(MainPort, () => console.log("Main serveur a démarré"));
 
 // Controlleur des client
 ClieServer.on('message', (msg, res) => {
@@ -503,11 +589,11 @@ ClieServer.on('message', (msg, res) => {
             break;
 
         case 'player_reponse': // Joueurs infofrme de sa réponse
-         if (parsedMessage.verdict == false) {
-            sendLooseLifeMessage();
-            console.log(parsedMessage.verdict)
-        }
-    
+            if (parsedMessage.verdict == false) {
+                sendLooseLifeMessage();
+                console.log(parsedMessage.verdict)
+            }
+
             // console.log(parsedMessage.verdict);
             // console.log(parsedMessage.player);
 
@@ -522,103 +608,103 @@ ClieServer.on('message', (msg, res) => {
                 });
 
                 // Informe le main de la question next
-                MainServer.send(JSON.stringify({
+                WebApp.send(JSON.stringify({
                     message: "next_question",
                     turn: player,
                     quiz: [QUIZ_DATA[currentQuizIndex]],
                     index: currentQuizIndex
-                }), SERVER_DATA.port, SERVER_DATA.ip);
+                }));
 
                 console.log("Next question : ");
             }
             break;
-    
-        case 'player_shake' :
-                // Informe le main de la question next
-                MainServer.send(JSON.stringify({
-                    message: "player_shake",
-                    player: parsedMessage.player,
-                    shakeValue: parsedMessage.shakeValue
-                }), SERVER_DATA.port, SERVER_DATA.ip);
 
-                console.log("Shake Force : " + parsedMessage.shakeValue);
+        case 'player_shake':
+            // Informe le main de la question next
+            WebApp.send(JSON.stringify({
+                message: "player_shake",
+                player: parsedMessage.player,
+                shakeValue: parsedMessage.shakeValue
+            }), SERVER_DATA.port, SERVER_DATA.ip);
+
+            console.log("Shake Force : " + parsedMessage.shakeValue);
             break;
 
-            case 'player_loose_life':
-                // Gérer la perte de vie ici
-                sendLooseLifeMessage();
-                console.log('Joueur a perdu une vie');
-                break;
+        case 'player_loose_life':
+            // Gérer la perte de vie ici
+            sendLooseLifeMessage();
+            console.log('Joueur a perdu une vie');
+            break;
 
-            case 'player_loose_game':
-                sendLooseGameMessage(parsedMessage.player);
-                console.log('Joueur qui a perdu la partie');
-                break;
+        case 'player_loose_game':
+            sendLooseGameMessage(parsedMessage.player);
+            console.log('Joueur qui a perdu la partie');
+            break;
 
-            case 'player_win_game':
-              // Gérer la victoire du joueur ici
-              console.log('Joueur a gagné la partie');
-              // Envoyer un message au joueur gagnant
-              sendWinGameMessage(parsedMessage.player);
-              break;
+        case 'player_win_game':
+            // Gérer la victoire du joueur ici
+            console.log('Joueur a gagné la partie');
+            // Envoyer un message au joueur gagnant
+            sendWinGameMessage(parsedMessage.player);
+            break;
 
-              case 'reinit_game':
-                // Code pour gérer la réinitialisation
-                console.log("Reinitialisation de la partie");
-                    initNewGame();
-                break;
+        case 'reinit_game':
+            // Code pour gérer la réinitialisation
+            console.log("Reinitialisation de la partie");
+            initNewGame();
+            break;
 
     }
 
 }); ClieServer.bind(CliePort, () => { console.log('Clies server a démarré') });
 
 
-
 function initNewGame() {
-   
+
     // Réinitialiser les données de jeu
     WAITING_LIST = [];
     currentQuizIndex = Math.floor(Math.random() * QUIZ_DATA.length);
     sendMessageToPlayers("game_reset", {});
-   
+
     // ...
     // Envoyer un message aux clients pour les informer que le jeu a été réinitialisé
-    
 
-    MainServer.send(JSON.stringify({
+
+    WebApp.send(JSON.stringify({
         message: "game_reset"
-    }), SERVER_DATA.port, SERVER_DATA.ip);
+    }));
 }
 
 function sendLooseLifeMessage() {
-  MainServer.send(JSON.stringify({
-    message: 'player_loose_life'
-  }), SERVER_DATA.port, SERVER_DATA.ip);
+    WebApp.send(JSON.stringify({
+        message: 'player_loose_life'
+    }));
 }
 
 function sendLooseGameMessage(player) {
-  MainServer.send(JSON.stringify({
-    message: 'player_loose_game',
-    player: player
-  }), SERVER_DATA.port, SERVER_DATA.ip);
-  sendMessageToPlayers("player_loose_game", {
-    message: 'player_loose_game',
-    player: player
-  });
+    WebApp.send(JSON.stringify({
+        message: 'player_loose_game',
+        player: player
+    }));
 
-  console.log('Joueur qui a perdu la partie');
+    sendMessageToPlayers("player_loose_game", {
+        message: 'player_loose_game',
+        player: player
+    });
+
+    console.log('Joueur qui a perdu la partie');
 }
 
 function sendWinGameMessage(_player) {
-    MainServer.send(JSON.stringify({
+    WebApp.send(JSON.stringify({
         message: 'player_win_game',
         player: _player
-      }), SERVER_DATA.port, SERVER_DATA.ip);
-  
-  sendMessageToPlayers("player_win_game", {
-    message: 'player_win_game',
-    player: _player
-  });
+    }), SERVER_DATA.port, SERVER_DATA.ip);
 
-  console.log('Joueur qui a gagné la partie');
+    sendMessageToPlayers("player_win_game", {
+        message: 'player_win_game',
+        player: _player
+    });
+
+    console.log('Joueur qui a gagné la partie');
 }
