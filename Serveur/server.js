@@ -315,9 +315,10 @@ const CliePort = process.env.SUB_PORT;
 
 /** Websocket Server | Web */
 const MainServerWs = new Websocket.Server({
-   // host: "13.38.172.41",
-    port: MainPort
+    //host: "13.38.172.41",
+    port: 1000
 });
+
 
 let WebApp = null;
 
@@ -531,7 +532,7 @@ MainServer.on('message', (msg, res) => {
 
     }
 
-}); //MainServer.bind(MainPort, () => console.log("Main serveur a démarré"));
+}); MainServer.bind(MainPort, () => console.log("Main serveur a démarré"));
 
 // Controlleur des client
 ClieServer.on('message', (msg, res) => {
