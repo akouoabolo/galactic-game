@@ -324,8 +324,7 @@ const server = https.createServer({
     key: fs.readFileSync('server.key')
 });
 
-server.listen(portSSL, "172.26.7.121");
-
+server.listen(portSSL);
 const MainServerWs = new Websocket.Server({ server });
 
 
@@ -406,6 +405,11 @@ MainServerWs.on("connection", (ws) => {
         }
     });
 }); 
+
+MainServerWs.on('listening', (ws) => {
+    const addr = MainServerWs.address();
+    console.log(`Secured Ws started ${addr.address}:${addr.port}`);
+})
 
 /** UDP SERVER | mobile + pc */
 const MainServer = dgram.createSocket("udp4");
