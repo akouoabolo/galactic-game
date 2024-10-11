@@ -312,7 +312,7 @@ let PLAYERS_LIST = [];
 let SERVER_DATA = {};
 
 // Infos
-const portSSL  = 443;
+const portSSL  = 1000;
 const MainPort = process.env.MAIN_PORT;
 const CliePort = process.env.SUB_PORT;
 
@@ -324,7 +324,7 @@ const server = https.createServer({
     key: fs.readFileSync('server.key')
 });
 
-server.listen(portSSL, "13.38.172.41");
+server.listen(portSSL);
 
 const MainServerWs = new Websocket.Server({ server });
 
