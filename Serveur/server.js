@@ -324,7 +324,7 @@ const server = https.createServer({
     key: fs.readFileSync('server.key')
 });
 
-server.listen(portSSL);
+server.listen(portSSL, "localhost");
 
 const MainServerWs = new Websocket.Server({ server });
 
