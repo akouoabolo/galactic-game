@@ -543,6 +543,10 @@ MainServer.on('message', (msg, res) => {
 
 }); MainServer.bind(MainPort, () => console.log("Main serveur a démarré"));
 
+MainServer.on('listening', (info) => {
+    console.log("Main Server listen on " + info)
+})
+
 // Controlleur des client
 ClieServer.on('message', (msg, res) => {
 
