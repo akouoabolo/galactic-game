@@ -1,5 +1,7 @@
-const dgram = require('dgram');
+const dgram     = require('dgram');
 const Websocket = require("ws");
+const https     = require('https');
+const fs        = require('fs');
 
 require('dotenv').config();
 
@@ -310,14 +312,21 @@ let PLAYERS_LIST = [];
 let SERVER_DATA = {};
 
 // Infos
+const portSSL  = 443;
 const MainPort = process.env.MAIN_PORT;
 const CliePort = process.env.SUB_PORT;
 
 /** Websocket Server | Web */
-const MainServerWs = new Websocket.Server({
-    //host: "13.38.172.41",
-    port: 1000
+
+// Certif ssl
+const server = https.createServer({
+    cert: fs.readFileSync('server.cert'),
+    key: fs.readFileSync('server.key')
 });
+
+server.listen(portSSL);
+
+const MainServerWs = new Websocket.Server({ server });
 
 
 let WebApp = null;
@@ -396,7 +405,7 @@ MainServerWs.on("connection", (ws) => {
 
         }
     });
-}); console.log(`Serveur a démarré sur ${MainServerWs.host}:${MainServerWs.port}`);
+}); 
 
 /** UDP SERVER | mobile + pc */
 const MainServer = dgram.createSocket("udp4");
