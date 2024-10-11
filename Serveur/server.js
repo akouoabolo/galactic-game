@@ -312,7 +312,7 @@ let PLAYERS_LIST = [];
 let SERVER_DATA = {};
 
 // Infos
-const portSSL  = 443;
+const portSSL  = 3045;
 const MainPort = process.env.MAIN_PORT;
 const CliePort = process.env.SUB_PORT;
 
