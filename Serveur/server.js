@@ -315,7 +315,6 @@ const CliePort = process.env.SUB_PORT;
 
 /** Websocket Server | Web */
 const MainServerWs = new Websocket.Server({
-    host: "127.0.0.1",
     port: MainPort
 });
 

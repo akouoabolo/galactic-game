@@ -9,6 +9,7 @@
     {"name":"inst_6239ABBD","path":"rooms/r_winner/r_winner.yy",},
     {"name":"inst_C1411E6","path":"rooms/r_winner/r_winner.yy",},
     {"name":"inst_3044192C","path":"rooms/r_winner/r_winner.yy",},
+    {"name":"inst_4FF64E48","path":"rooms/r_winner/r_winner.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -21,6 +22,7 @@
         {"$GMRInstance":"","%Name":"inst_6239ABBD","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_6239ABBD","objectId":{"name":"o_WinnerBox","path":"objects/o_WinnerBox/o_WinnerBox.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":1856.0,"y":544.0,},
         {"$GMRInstance":"","%Name":"inst_C1411E6","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_C1411E6","objectId":{"name":"o_WinnerBox","path":"objects/o_WinnerBox/o_WinnerBox.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":683.0,"y":377.0,},
         {"$GMRInstance":"","%Name":"inst_3044192C","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_3044192C","objectId":{"name":"o_WinnerText","path":"objects/o_WinnerText/o_WinnerText.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":682.5,"y":275.0,},
+        {"$GMRInstance":"","%Name":"inst_4FF64E48","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_4FF64E48","objectId":{"name":"o_ButtonReinitGame","path":"objects/o_ButtonReinitGame/o_ButtonReinitGame.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":683.0,"y":627.5,},
       ],"layers":[],"name":"Instances_1","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRInstanceLayer":"","%Name":"Instances","depth":200,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRAssetLayer":"","%Name":"MainAssets","assets":[
