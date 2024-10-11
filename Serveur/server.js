@@ -320,8 +320,8 @@ const CliePort = process.env.SUB_PORT;
 
 // Certif ssl
 const server = https.createServer({
-    cert: fs.readFileSync('server.cert'),
-    key: fs.readFileSync('server.key')
+    cert: fs.readFileSync('/home/bitnami/ssl/certificate.crt'),
+    key: fs.readFileSync('/home/bitnami/ssl/private.key')
 });
 
 server.listen(portSSL);
