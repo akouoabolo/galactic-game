@@ -324,7 +324,7 @@ const server = https.createServer({
     key: fs.readFileSync('server.key')
 });
 
-server.listen(portSSL, "localhost");
+server.listen(portSSL, "172.26.7.121");
 
 const MainServerWs = new Websocket.Server({ server });
 
@@ -543,9 +543,6 @@ MainServer.on('message', (msg, res) => {
 
 }); MainServer.bind(MainPort, () => console.log("Main serveur a démarré"));
 
-MainServer.on('listening', (info) => {
-    console.log("Main Server listen on " + info)
-})
 
 // Controlleur des client
 ClieServer.on('message', (msg, res) => {
